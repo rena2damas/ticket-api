@@ -11,6 +11,7 @@ import requests
 from flask import current_app
 
 from src.models.Ticket import Ticket
+from src.services.jira import ProxyJIRA as Jira
 from src.services.notifications.handlers.JiraNotificationHandler import JiraNotificationHandler
 from src.services.ticket import TicketService
 
@@ -65,7 +66,7 @@ class O365MailboxManager:
         for message in messages:
             self.process_message(message_id=message.object_id)
 
-    def listen_to_notifications(self, **kwargs):
+    def notification_manager(self, **kwargs):
         handler = JiraNotificationHandler(hpda_support=self)
 
         # set inbox/sent folder
@@ -77,9 +78,9 @@ class O365MailboxManager:
         sent_subscription_id = self._subscriber.subscribe(resource=sent_folder)
         subscriptions = [inbox_subscription_id, sent_subscription_id]
 
-        self._subscriber.listen_to_notifications(subscriptions=subscriptions,
-                                                 notification_handler=handler,
-                                                 **kwargs)
+        self._subscriber.create_event_channel(subscriptions=subscriptions,
+                                              notification_handler=handler,
+                                              **kwargs)
 
     def process_message(self, message_id):
         """
