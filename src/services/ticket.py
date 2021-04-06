@@ -50,23 +50,22 @@ class TicketService:
 
         if jira:
 
-            # If any of the filter is not a Jira filter, then provide
+            # If any of the filter is not a Jira filter, then
             # apply local filter and pass on results to jql
             if any(not cls.is_jira_filter(filter_) for filter_ in filters):
                 tickets = Ticket.query.filter_by(**filters).all()
-                print(len(tickets))
-                tickets = cls.remove_deleted(tickets=tickets)
-                print(len(tickets))
                 filters['key'] = filters.get('key', [ticket.jira_ticket_key for ticket in tickets])
 
-            # fetch ticket from Jira
+            # fetch tickets from Jira using jql while skipping jql
+            # validation since local db might not be synched with Jira
             query = jira_service.create_jql_query(**{k: v for k, v in filters.items() if cls.is_jira_filter(k)})
-            jira_tickets = jira_service.search_issues(jql_str=query, maxResults=limit)
+            jira_tickets = jira_service.search_issues(jql_str=query, maxResults=limit, validate_query=False)
 
             tickets = []
             for jira_ticket in jira_tickets:
                 ticket = cls.find_one(jira_ticket_key=jira_ticket.key, jira=False)
                 # prevent cases where local db is not synched with Jira
+                # for cases where Jira tickets are not yet locally present
                 if ticket:
                     ticket.jira = jira_ticket.raw
                     tickets.append(ticket)
