@@ -57,6 +57,7 @@ def setup_app(app):
 
         # use app context to load namespaces and blueprints
         from src.resources.test import Test
+        from src.resources.testview import TestView
 
     # initialize root blueprint
     bp = Blueprint('api', __name__, url_prefix=app.config['APPLICATION_CONTEXT'])
@@ -64,12 +65,13 @@ def setup_app(app):
     # link api to blueprint
     api.init_app(bp)
 
-    # register blueprints
-    app.register_blueprint(bp)
-
     # # register namespaces
     # api.add_namespace(tickets)
-    # api.add_resource(Test, '/Test', '/test')
+    api.add_resource(Test, '/test', endpoint='foo')
+    api.add_resource(TestView, '/testview', endpoint='testview')
+
+    # register blueprints
+    app.register_blueprint(bp)
 
     # register cli commands
     app.cli.add_command(o365_cli)

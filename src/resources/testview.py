@@ -1,7 +1,7 @@
-from flask_restful import Resource
+from flask.views import MethodView
 
 
-class Test(Resource):
+class TestView(MethodView):
     def get(self):
         """
         Example endpoint returning a list of colors by palette
@@ -13,4 +13,4 @@ class Test(Resource):
           200:
             description: Ok
         """
-        return {'status': 'ok'}
+        return {'test': '123'}
