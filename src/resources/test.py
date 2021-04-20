@@ -3,6 +3,7 @@ from flask_restful import Resource
 from src import api
 
 
+@api.resource('/test')
 class Test(Resource):
     def get(self):
         """

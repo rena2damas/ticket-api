@@ -18,5 +18,6 @@ swagger = Swagger(config={
     'info': {
         'title': "Ticket manager service",
         'description': "Service to manage tickets and Jira integration.",
-    }
+    },
+    "specs_route": "/api/tickets/"
 }, merge=True)
