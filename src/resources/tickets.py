@@ -36,16 +36,9 @@ class Tickets(Resource):
     @swag_from({
         'parameters': [
             {
-                'name': 'limit',
-                'description': 'results limit',
                 'in': 'query',
-                'default': 20,
-                'required': True
-            },
-            {
                 'name': 'boards',
                 'description': 'boards to fetch tickets from',
-                'in': 'query',
                 'schema': {
                     'type': 'array',
                     'items': {
@@ -56,11 +49,10 @@ class Tickets(Resource):
                 'default': [current_app.config['JIRA_DEFAULT_BOARD']['key']],
                 'explode': False,
                 'required': True
-            },
-            {
+            }, {
+                'in': 'query',
                 'name': 'categories',
                 'description': 'categories that the ticket belongs to',
-                'in': 'query',
                 'schema': {
                     'type': 'array',
                     'items': {
@@ -71,6 +63,51 @@ class Tickets(Resource):
                 'default': [current_app.config['JIRA_TICKET_LABEL_DEFAULT_CATEGORY']],
                 'explode': False,
                 'required': True
+            }, {
+                'in': 'query',
+                'name': 'q',
+                'description': 'search for text occurrences',
+            }, {
+                'in': 'query',
+                'name': 'reporter',
+                'description': 'the ticket reporter email',
+            }, {
+                'in': 'query',
+                'name': 'assignee',
+                'description': 'the user email whose ticket is assigned to',
+            }, {
+                'in': 'query',
+                'name': 'status'
+            }, {
+                'in': 'query',
+                'name': 'watcher',
+                'description': 'tickets user has subscribed to',
+            }, {
+                'in': 'query',
+                'name': 'fields',
+                'description': 'additional fields to include in the results',
+                'schema': {
+                    'type': 'array',
+                    'items': {
+                        'type': 'string',
+                        'enum': JiraService.supported_fields()
+                    },
+                }
+            }, {
+                'in': 'query',
+                'name': 'limit',
+                'description': 'results limit',
+                'default': 20,
+                'required': True
+            }, {
+                'in': 'query',
+                'name': 'sort',
+                'description': 'sort tickets by',
+                'schema': {
+                    'type': 'string',
+                    'enum': ['created']
+                },
+                'default': 'created',
             }
         ],
         'responses': {
