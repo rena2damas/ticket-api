@@ -227,6 +227,18 @@ class TicketService:
             current_app.logger.info("Deleted ticket '{0}'.".format(ticket.key))
 
     @staticmethod
+    def comment(key, body, author, mimetype='text/plain'):
+        """
+        Create the body of the ticket.
+
+        :param key: the ticket key to comment on
+        :param body: the body of the ticket comment
+        :param author: the author's email of the comment
+        :param mimetype: the mimetype of the body
+        """
+
+
+    @staticmethod
     def create_ticket_body(template='default.j2', **kwargs):
         """
         Create the body of the ticket.
