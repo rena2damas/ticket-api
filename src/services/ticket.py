@@ -36,8 +36,10 @@ class TicketService:
 
         # create ticket body with Jira markdown format
         body = cls.create_ticket_body(
-            author=jira_service.markdown.mention(reporter=reporter or kwargs.get('reporter')),
-            body=kwargs.get('body')
+            values={
+                'author': jira_service.markdown.mention(reporter=reporter or kwargs.get('reporter')),
+                'body': kwargs.get('body')
+            }
         )
 
         # if reporter is not a Jira account, reporter is set to 'Anonymous'
@@ -227,24 +229,12 @@ class TicketService:
             current_app.logger.info("Deleted ticket '{0}'.".format(ticket.key))
 
     @staticmethod
-    def comment(key, body, author, mimetype='text/plain'):
-        """
-        Create the body of the ticket.
-
-        :param key: the ticket key to comment on
-        :param body: the body of the ticket comment
-        :param author: the author's email of the comment
-        :param mimetype: the mimetype of the body
-        """
-
-
-    @staticmethod
-    def create_ticket_body(template='default.j2', **kwargs):
+    def create_ticket_body(template='default.j2', values=None):
         """
         Create the body of the ticket.
 
         :param template: the template to build ticket body from
-        :param kwargs: values for template interpolation
+        :param values: values for template interpolation
         """
         if not template:
             return None
@@ -257,4 +247,4 @@ class TicketService:
         with open(template_filepath) as file:
             content = file.read()
 
-        return jinja2.Template(content).render(**kwargs)
+        return jinja2.Template(content).render(**values)
