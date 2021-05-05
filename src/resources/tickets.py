@@ -13,7 +13,7 @@ from src.services.ticket import TicketService
 from src.services.jira import JiraService
 
 
-@api.resource('/tickets')
+@api.resource('/tickets', endpoint='tickets')
 class Tickets(Resource):
 
     @flasgger.swag_from({
@@ -148,7 +148,7 @@ class Tickets(Resource):
 # @swagger.validate('UserSchema')
 
 
-@api.resource('/tickets/<key>')
+@api.resource('/tickets/<key>', endpoint='ticket')
 class Ticket(Resource):
 
     @flasgger.swag_from({
@@ -193,7 +193,7 @@ class Ticket(Resource):
             return IssueSchema().dump(result)
 
 
-@api.resource('/tickets/<key>/comment')
+@api.resource('/tickets/<key>/comment', endpoint='comment')
 class Comment(Resource):
 
     @flasgger.swag_from({
@@ -248,4 +248,23 @@ class Comment(Resource):
         """
         Create a new ticket comment.
         """
-        pass
+        body = {}
+        files = {}
+        if request.mimetype == 'application/json':
+            body = request.json
+        elif request.mimetype == 'multipart/form-data':
+            body = request.form.to_dict(flat=True)
+            files = request.files.to_dict(flat=False)
+        else:
+            abort(415, status=415, message='Unsupported media type')
+
+        # validate body
+        errors = CreateTicketCommentSchema().validate(body)
+        if errors:
+            abort(400, status=400, message=errors)
+
+        try:
+            created = TicketService.comment(**body, attachments=files.get('attachments', []))
+            return IssueSchema().dump(created), 201
+        except jira.exceptions.JIRAError as ex:
+            abort(400, status=400, message=ex.text)
