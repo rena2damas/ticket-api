@@ -204,7 +204,7 @@ class Comment(Resource):
                             'attachments': marshmallow.fields.List(
                                 marshmallow.fields.Raw(
                                     metadata=dict(
-                                        type='file',
+                                        type='str',
                                         description='files to attach'
                                     )
                                 )
@@ -241,7 +241,7 @@ class Comment(Resource):
 
         try:
             TicketService.create_comment(
-                key=key,
+                issue=key,
                 **body,
                 attachments=files
             )
