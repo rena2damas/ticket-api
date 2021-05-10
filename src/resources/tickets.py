@@ -245,7 +245,7 @@ class Comment(Resource):
                 **body,
                 attachments=files
             )
-            return None, 201
+            return None, 204
         except jira.exceptions.JIRAError as ex:
             abort(400, status=400, message=ex.text)
 
