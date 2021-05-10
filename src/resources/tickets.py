@@ -204,7 +204,7 @@ class Comment(Resource):
                             'attachments': marshmallow.fields.List(
                                 marshmallow.fields.Raw(
                                     metadata=dict(
-                                        type='str',
+                                        type='file',
                                         description='files to attach'
                                     )
                                 )
