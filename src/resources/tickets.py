@@ -240,7 +240,7 @@ class Comment(Resource):
             abort(400, status=400, message=errors)
 
         try:
-            created = TicketService.create_comment(
+            TicketService.create_comment(
                 key=key,
                 **body,
                 attachments=files
