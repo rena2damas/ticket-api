@@ -12,7 +12,7 @@ class JiraNotificationHandler(O365NotificationsHandler):
         self.manager = manager
         super().__init__()
 
-    def process(self, notification):
+    def process(self, notification: O365Notification):
         """
         Process an incoming notification.
         If notification is of type Message, create a new Jira ticket.
@@ -20,11 +20,11 @@ class JiraNotificationHandler(O365NotificationsHandler):
         to the inbox and sent folder.
 
         :param notification: the incoming notification
-        :type notification: O365Notification
+        :type notification: an O365 notification
         """
 
         # when a notification is received...
-        if notification.type == O365Notification.Type.NOTIFICATION.value:
+        if notification.type == O365Notification.Type.O365_NOTIFICATION.value:
 
             # log 'Missed' notifications
             if notification.change_type == O365Notification.ChangeType.MISSED.value:
