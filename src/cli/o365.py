@@ -84,7 +84,6 @@ def authenticate(mailbox=None, retries=0):
     """
     Set code used for OAuth2 authentication.
     """
-
     return authenticate_account(mailbox=mailbox, retries=retries)
 
 
@@ -95,7 +94,6 @@ def handle_incoming_email(mailbox=None, retries=0):
     """
     Handle incoming email.
     """
-
     manager = create_mailbox_manager(mailbox=mailbox, retries=retries)
 
     # Start listening for incoming notifications...
@@ -112,7 +110,6 @@ def check_for_missing_tickets(days=1):
     """
     Check for possible tickets that went missing in the last days.
     """
-
     manager = create_mailbox_manager()
 
     # Start listening for incoming notifications...
