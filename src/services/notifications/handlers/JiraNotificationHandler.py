@@ -31,7 +31,7 @@ class JiraNotificationHandler(O365NotificationsHandler):
                 current_app.logger.warning("Notification missed: {0}".format(vars(notification)))
 
             # create Jira ticket for 'Message' notifications
-            elif notification.resource_data.get('@odata.type') == O365Notification.ResourceType.MESSAGE.value:
+            elif notification.resource_data.get('@odata.type') == O365Notification.ResourceType.O365_MESSAGE.value:
 
                 # folder represents any folder from subscriptions list (inbox)
                 self.manager.process_message(message_id=notification.resource_data.get('Id'))
