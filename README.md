@@ -127,7 +127,7 @@ flask run
 ```
 
 If default options are set, an HTTP server is listening at [http://localhost:5000/](http://localhost:5000/). To modify
-the ```Flask``` server properties, one should set the properties in ```.flaskenv``` file.
+the ```Flask``` server properties, one should set them in ```.flaskenv``` file.
 
 At this point, a Swagger UI instance is running - in which the user can interact with -
 at [http://localhost:5000/api/tickets/v1/](http://localhost:5000/api/tickets/v1/).
