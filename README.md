@@ -23,7 +23,7 @@ A possible configuration is:
     SQLALCHEMY_DATABASE_URI=sqlite:///example.db
 
     # Application context
-    APPLICATION_CONTEXT=/api/tickets
+    APPLICATION_CONTEXT=/api/tickets/v3
     
     # version of OpenAPI
     OPENAPI=3.0.3
@@ -112,6 +112,36 @@ $ flask o365 handle-incoming-email
 A new streaming connection is then initiated between our service and the ```O365``` notification service. From this
 moment on, as soon as a new email reaches the inbox folder, a Jira API request is performed, and a new ticket is
 created.
+
+## Ticket API service
+
+This project also comprises a ```Flask``` RESTful web server where a user can query to create, update and manage
+tickets. Each endpoint is properly documented under [OpenAPI 3 standard](https://swagger.io/specification/) which makes
+easy for humans and third party services to understand and talk to.
+
+To start the development server, run:
+
+```bash
+flask run
+```
+
+If default options are set, an HTTP server is listening at [http://localhost:5000/](http://localhost:5000/). To modify
+the ```Flask``` server properties, one should set the properties in ```.flaskenv``` file.
+
+At this point, a Swagger UI instance is running - in which the user can interact with -
+at [http://localhost:5000/api/tickets/v1/](http://localhost:5000/api/tickets/v1/).
+
+### Under the hood
+
+This project takes advantage of several python packages that leverage the service implementation. The core packages are:
+
+* [Flask](https://pypi.org/project/Flask/): famous application web framework based on ```werkzeug``` WSGI
+* [Flask-RESTful](https://pypi.org/project/Flask-RESTful/): serve RESTful endpoints in ```Flask```
+* [Flasgger](https://pypi.org/project/flasgger/): generate OpenAPI specs from ```Flask``` views 
+* [Flask-SQLAlchemy](https://pypi.org/project/Flask-SQLAlchemy/): enable ```SQLAlchemy``` support for ```Flask```
+* [marshmallow](https://pypi.org/project/marshmallow/): for data API serialization
+* [jira](https://pypi.org/project/jira/): _pythonic_ implementation for Jira REST API
+* [O365](https://pypi.org/project/jira/): _pythonic_ implementation for Microsoft Graph & Office REST API
 
 ## Additional info
 
