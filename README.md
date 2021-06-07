@@ -226,4 +226,4 @@ See [requirements](requirements.txt)
 
 ## License
 
-[GPL](LICENSE) license
+[GPLv3](LICENSE) license
