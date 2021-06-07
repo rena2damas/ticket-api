@@ -1,7 +1,7 @@
 FROM python:3.8
 
 # set the current working directory
-ARG CWD /usr/local/app
+ARG CWD=/usr/local/app
 RUN mkdir $CWD
 WORKDIR $CWD
 
