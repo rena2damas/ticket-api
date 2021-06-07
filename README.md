@@ -5,10 +5,11 @@ A service for managing emails coming in/out from/to a O365 mailbox and integrate
 ## How does it work?
 
 This service is suitable for anyone looking to create Jira tickets from the emails arriving to a mailbox. The motivation
-behind the creation of this project is that, on one hand, Jira provides good tools to track and manage tickets, and O365
-mailbox is a convenient way to receive requests in the form of an email. This solution comes to merge the best of both
-worlds by allowing one to create a Jira ticket directly from a O365 email. Once a new email arrives to a mailbox, the
-service picks up the message from the inbox folder, and contacts the Jira API for the creation of the ticket.
+behind the creation of this project is that, on one hand, Jira provides good tools to track and manage tickets,
+and ```O365``` mailbox is a convenient way to receive requests in the form of an email. This solution comes to merge the
+best of both worlds by allowing one to create a Jira ticket directly from a ```O365``` email. Once a new email arrives
+to a mailbox, the service picks up the message from the inbox folder, and contacts the Jira API for the creation of the
+ticket.
 
 The service provides different configuration properties so that it can best fit the user's needs.
 
@@ -137,7 +138,7 @@ This project takes advantage of several python packages that leverage the servic
 
 * [Flask](https://pypi.org/project/Flask/): famous application web framework based on ```werkzeug``` WSGI
 * [Flask-RESTful](https://pypi.org/project/Flask-RESTful/): serve RESTful endpoints in ```Flask```
-* [Flasgger](https://pypi.org/project/flasgger/): generate OpenAPI specs from ```Flask``` views 
+* [Flasgger](https://pypi.org/project/flasgger/): generate OpenAPI specs from ```Flask``` views
 * [Flask-SQLAlchemy](https://pypi.org/project/Flask-SQLAlchemy/): enable ```SQLAlchemy``` support for ```Flask```
 * [marshmallow](https://pypi.org/project/marshmallow/): for data API serialization
 * [jira](https://pypi.org/project/jira/): _pythonic_ implementation for Jira REST API
