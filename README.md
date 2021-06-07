@@ -199,3 +199,18 @@ python setup.py sdist bdist_wheel
 ```
 
 Add the file entry to the ```requirements.txt```.
+
+## Local development
+
+For local development, one will be running the service on ```localhost```. Therefore, setting up a local python
+environment comes in handy. If using ```conda```, the setup would look like this:
+
+```bash
+conda create -p ticket-manager/ python=3
+conda activate ticket-manager/
+pip install -r requirements
+
+# ready to go !
+flask run
+...
+```
