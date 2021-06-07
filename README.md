@@ -114,6 +114,9 @@ A new streaming connection is then initiated between our service and the ```O365
 moment on, as soon as a new email reaches the inbox folder, a Jira API request is performed, and a new ticket is
 created.
 
+A thorough explanation on how the notification streaming mechanism works, can be
+found [here](https://github.com/rena2damas/o365-notifications).
+
 ## Ticket API service
 
 This project also comprises a ```Flask``` RESTful web server where a user can query to create, update and manage
@@ -142,7 +145,9 @@ This project takes advantage of several python packages that leverage the servic
 * [Flask-SQLAlchemy](https://pypi.org/project/Flask-SQLAlchemy/): enable ```SQLAlchemy``` support for ```Flask```
 * [marshmallow](https://pypi.org/project/marshmallow/): for data API serialization
 * [jira](https://pypi.org/project/jira/): _pythonic_ implementation for Jira REST API
-* [O365](https://pypi.org/project/jira/): _pythonic_ implementation for Microsoft Graph & Office REST API
+* [O365](https://pypi.org/project/jira/): _pythonic_ implementation for Microsoft Graph & Office 365 REST API
+* [O365-notifications](https://github.com/rena2damas/o365-notifications): _pythonic_ implementation for notification
+  connections for Microsoft Graph & Office 365 REST API
 
 ## Additional info
 
@@ -180,6 +185,21 @@ $ flask o365 check-for-missing-tickets --help
 >   --help           Show this message and exit.
 ```
 
+### Local development
+
+For local development, one will be running the service on ```localhost```. Therefore, setting up a local python
+environment comes in handy. If using ```conda```, the setup would look like this:
+
+```bash
+conda create -p ticket-manager/ python=3
+conda activate ticket-manager/
+pip install -r requirements
+
+# ready to go !
+flask run
+...
+```
+
 ### Dependencies
 
 It is possible that some dependencies require changes to the source code. Oftentimes, new package releases contain bugs
@@ -199,18 +219,3 @@ python setup.py sdist bdist_wheel
 ```
 
 Add the file entry to the ```requirements.txt```.
-
-## Local development
-
-For local development, one will be running the service on ```localhost```. Therefore, setting up a local python
-environment comes in handy. If using ```conda```, the setup would look like this:
-
-```bash
-conda create -p ticket-manager/ python=3
-conda activate ticket-manager/
-pip install -r requirements
-
-# ready to go !
-flask run
-...
-```
