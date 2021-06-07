@@ -73,7 +73,8 @@ A possible configuration is:
 
 ### O365 auth
 
-Because the service relies on O365 services, one should start off by requesting permissions against the O365 service:
+Because the service relies on ```O365``` services, one should start off by requesting permissions against the ```O365```
+service:
 
 ```bash
 $ flask o365 authenticate
@@ -84,13 +85,13 @@ $ flask o365 authenticate
 > ...
 ```
 
-As seen above, the O365 user must provide proper consent for this service to perform certain actions (see scopes) on
-behalf of the user, as per defined in OAuth2 authorization flow. For the use case previously mentioned, the service
-would require access to the O365 user's inbox to read its content.
+As seen above, the ```O365``` user must provide proper consent for this service to perform certain actions (see scopes)
+on behalf of the user, as per defined in OAuth2 authorization flow. For the use case previously mentioned, the service
+would require access to the ```O365``` user's inbox to read its content.
 
-The best way to go about it is simply to open the link in a browser and accept the requested consents. The O365 will
-redirect to a link containing the so desired authorization code. Simply paste that response link back to the terminal,
-and it's done.
+The best way to go about it is simply to open the link in a browser and accept the requested consents. The ```O365```
+will redirect to a link containing the so desired authorization code. Simply paste that response link back to the
+terminal, and it's done.
 
 A new file ```o365_token.txt``` will be created which contains all the important OAuth2 parameters such as
 the ```access_token``` and ```refresh_token```. The ```refresh_token``` has a duration of 90 days after which it
@@ -108,36 +109,62 @@ $ flask o365 handle-incoming-email
 > ...
 ```
 
-A new streaming connection is then initiated between our service and the O365 notification service. From this moment on,
-as soon as a new email reaches the inbox folder, a Jira API request is performed, and a new ticket is created.
+A new streaming connection is then initiated between our service and the ```O365``` notification service. From this
+moment on, as soon as a new email reaches the inbox folder, a Jira API request is performed, and a new ticket is
+created.
 
-## Dependencies
+## Additional info
 
-Some dependencies require changes to the source code. To do so, get the source package from the PiPy repository. It is
-usually a ```tar.gz``` file.
+### Available commands
 
-Then, extract the code:
+It is possible to check the list of available supported operations by:
+
+```bash
+$ flask
+> ...
+```
+
+As any ```Flask``` application, the ```run``` and ```shell``` operations are present. It is also present a set of
+commands to manage ```O365``` related operations:
+
+```bash
+$ flask o365
+...
+> authenticate               Set code used for OAuth2 authentication.
+> check-for-missing-tickets  Check for possible tickets that went missing...
+> handle-incoming-email      Handle incoming email.
+```
+
+Each command contains its own instructions and properties that are possible to specify. Enable ```--help``` flag to get
+for more information on a command. Take the example below:
+
+```bash
+$ flask o365 check-for-missing-tickets --help
+> Usage: flask o365 check-for-missing-tickets [OPTIONS]
+>
+>   Check for possible tickets that went missing in the last days.
+>
+> Options:
+>   -d, --days TEXT  number of days to search back
+>   --help           Show this message and exit.
+```
+
+### Dependencies
+
+It is possible that some dependencies require changes to the source code. Oftentimes, new package releases contain bugs
+that might break the code, and so a local patch must be rolled out. To do so, get the source code package that needs a
+fix from the ```PiPy``` repository. It is usually a ```tar.gz``` file.
+
+Extract the code:
 
 ```bash
 tar -xvf package.tar.gz
 ```
 
-Apply the code changes and create the package:
+... apply the code changes and recreate the package:
 
 ```bash
 python setup.py sdist bdist_wheel
 ```
 
-Add the entry to the ```requirements.txt```.
-
-## Commands
-
-The project provides a set of commands to be performed. To see the whole list of possible operations, run:
-
-```bash
-python main.py
-```
-
-Available options are:
-
-* listen_for_incoming_email: start listening for incoming email.
+Add the file entry to the ```requirements.txt```.
