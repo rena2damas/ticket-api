@@ -25,7 +25,7 @@ A possible configuration is:
     # Application context
     APPLICATION_CONTEXT=/api/tickets
     
-    # verion of OpenAPI
+    # version of OpenAPI
     OPENAPI=3.0.3
     
     # The application providing info about the ticket
@@ -71,14 +71,45 @@ A possible configuration is:
     EMAIL_WHITELISTED_DOMAINS=example.com
     EMAIL_BLACKLIST=malicious@example.com
 
-### O365 Authentication
+### O365 auth
 
-Because the service relies on O365 services, one should start off by authenticating against the O365 service:
+Because the service relies on O365 services, one should start off by requesting permissions against the O365 service:
 
-File ```o365_token.txt``` contains the authentication parameters to be exchanged with Microsoft authentication server.
-The ```access_token```
-is the token used in OAuth. It expires after 90 days and why it will have to be refreshed manually. Simply follow the
-instructions shown in the terminal when that happens.
+```bash
+$ flask o365 authenticate
+> ... INFO in o365: Account not yet authenticated.
+> Visit the following url to give consent:
+> https://login.microsoftonline.com/<tenant-id>/oauth2/v2.0/authorize?response_type=code&...
+> Paste the authenticated url here:
+> ...
+```
+
+As seen above, the O365 user must provide proper consent for this service to perform certain actions (see scopes) on
+behalf of the user, as per defined in OAuth2 authorization flow. For the use case previously mentioned, the service
+would require access to the O365 user's inbox to read its content.
+
+The best way to go about it is simply to open the link in a browser and accept the requested consents. The O365 will
+redirect to a link containing the so desired authorization code. Simply paste that response link back to the terminal,
+and it's done.
+
+A new file ```o365_token.txt``` will be created which contains all the important OAuth2 parameters such as
+the ```access_token``` and ```refresh_token```. The ```refresh_token``` has a duration of 90 days after which it
+expires, so one must repeat the process just described to request new access codes.
+
+### Running it !
+
+To start listening for incoming events (aka emails), it would go like this:
+
+```bash
+$ flask o365 handle-incoming-email
+> ... INFO in o365: Account already authenticated.
+> ... INFO in o365_mailbox: Start streaming connection for 'users/me@example.com' ...
+> ... INFO in base: Open new events channel ...
+> ...
+```
+
+A new streaming connection is then initiated between our service and the O365 notification service. From this moment on,
+as soon as a new email reaches the inbox folder, a Jira API request is performed, and a new ticket is created.
 
 ## Dependencies
 
