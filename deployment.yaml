@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticket-api-service
+  namespace: hpda-developer
+  labels:
+    app: ticket-api-service
+    service: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ticket-api-service
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: ticket-api-service
+          image: cdl-hadoop-artifactory.asml.com/hpda-docker-local/ticket-api-service:latest
+          resources:
+            limits:
+              cpu: 1
+              memory: 1Gi
+            requests:
+              cpu: 1
+              memory: 516Mi
