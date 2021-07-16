@@ -43,7 +43,10 @@ class BaseConfig:
         ],
 
         # where to find the docs (ensure trailing slash)
-        'specs_route': APPLICATION_CONTEXT + ('' if APPLICATION_CONTEXT.endswith('/') else '/'),
+        'specs_route': APPLICATION_CONTEXT + '/',
+
+        # swagger static files
+        'static_url_path': APPLICATION_CONTEXT + '/flasgger_static',
 
         # hide the Swagger top bar
         'hide_top_bar': True
