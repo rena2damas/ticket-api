@@ -36,7 +36,7 @@ class BaseConfig:
         'specs': [
             {
                 'endpoint': 'swagger',
-                'route': '/swagger.json',
+                'route': APPLICATION_CONTEXT + '/swagger.json',
                 'rule_filter': lambda rule: True,
                 'model_filter': lambda tag: True
             }
