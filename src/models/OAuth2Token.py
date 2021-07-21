@@ -5,7 +5,7 @@ class OAuth2Token(db.Model):
     __tablename__ = 'oauth2_tokens'
 
     id = db.Column(db.Integer, primary_key=True)
-    type = db.Column(db.String, nullable=False)
+    token_type = db.Column(db.String, nullable=False)
     access_token = db.Column(db.String, nullable=False, unique=True)
     refresh_token = db.Column(db.String, nullable=False, unique=True)
     expires_in = db.Column(db.Integer, nullable=False)
