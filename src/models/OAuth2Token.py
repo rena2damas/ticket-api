@@ -6,6 +6,7 @@ class OAuth2Token(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     token_type = db.Column(db.String, nullable=False)
+    scope = db.Column(db.String)
     access_token = db.Column(db.String, nullable=False, unique=True)
     refresh_token = db.Column(db.String, nullable=False, unique=True)
     expires_in = db.Column(db.Integer, nullable=False)
