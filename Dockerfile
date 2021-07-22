@@ -28,8 +28,5 @@ COPY src/ src/
 COPY .env .
 COPY .flaskenv .
 
-# run process as non root
-USER 1000:1000
-
 # command to run on container start
 CMD [ "flask", "run" ]
