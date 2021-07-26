@@ -1,0 +1,4 @@
+---
+steps:
+  - label: ":docker: :kubernetes: Build image"
+    command: .buildkite/scripts/build.sh
