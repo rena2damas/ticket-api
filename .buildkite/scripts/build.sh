@@ -9,10 +9,10 @@ fi
 
 manifest="$(mktemp)"
 
-echo '--- :kubernetes: Shipping'
+echo "--- :kubernetes: Shipping"
 
 envsubst < deployment.yml > "${manifest}"
 kubectl apply -f "${manifest}"
 
-echo '--- :zzz: Waiting for deployment'
+echo "--- :zzz: Waiting for deployment"
 kubectl wait --for condition=available --timeout=300s -f "${manifest}"
