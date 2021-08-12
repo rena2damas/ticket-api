@@ -7,6 +7,6 @@ steps:
     branches: master
     agents:
       env: kubernetes
-      namespace: services
+      namespace: buildkite-agent
       privileged: true
       kaniko: true
