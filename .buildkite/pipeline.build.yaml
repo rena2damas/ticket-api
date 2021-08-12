@@ -7,4 +7,4 @@ steps:
     branches: master
     agents:
       env: kubernetes
-      agent: kaniko
+      namespace: hpc-services
