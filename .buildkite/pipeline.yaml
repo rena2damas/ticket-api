@@ -1,10 +1,12 @@
 ---
 steps:
-  - label: ":docker: :kubernetes: Build image"
-    command: .buildkite/scripts/build.sh
-    branches: master
-    agents:
-      env: kubernetes
-      namespace: buildkite-agent
-      privileged: true
-      kaniko: true
+  - trigger: "kaniko"
+    label: ":buildkite: Trigger build pipeline"
+    build:
+      message: "${BUILDKITE_MESSAGE}"
+      commit: "${BUILDKITE_COMMIT}"
+      branch: "${BUILDKITE_BRANCH}"
+      env:
+        BUILDKITE_PULL_REQUEST: "${BUILDKITE_PULL_REQUEST}"
+        BUILDKITE_PULL_REQUEST_BASE_BRANCH: "${BUILDKITE_PULL_REQUEST_BASE_BRANCH}"
+        BUILDKITE_PULL_REQUEST_REPO: "${BUILDKITE_PULL_REQUEST_REPO}"
