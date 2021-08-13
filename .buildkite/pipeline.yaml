@@ -2,8 +2,6 @@
 steps:
   - label: ":docker: :kubernetes: Build image"
     command: .buildkite/scripts/build.sh
-    concurrency: 1
-    concurrency_group: ticket-service/build
     branches: master
     agents:
       env: kubernetes
