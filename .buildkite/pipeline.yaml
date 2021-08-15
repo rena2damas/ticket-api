@@ -6,3 +6,8 @@ steps:
       message: "${BUILDKITE_MESSAGE}"
       commit: HEAD
       branch: "${BUILDKITE_BRANCH}"
+      env:
+        REGISTRY: renato.jfrog.io
+        REGISTRY_REPOSITORY: local-docker
+        IMAGE_NAME: ticket-service
+        IMAGE_TAG: latest
