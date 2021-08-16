@@ -16,7 +16,6 @@ steps:
       commit: HEAD
       branch: "${BUILDKITE_BRANCH}"
       env:
-        BUILDKITE_TRIGGER_BUILD_ID: "${BUILDKITE_BUILD_ID}"
         REGISTRY: renato.jfrog.io
         REGISTRY_REPOSITORY: local-docker
         IMAGE_NAME: ticket-service
