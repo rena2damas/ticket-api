@@ -1,5 +1,14 @@
 ---
 steps:
+  - label: ":package: Package repository"
+    command: ".buildkite/steps/kaniko/package.sh"
+    agents:
+      env: kubernetes
+      namespace: services
+      privileged: false
+
+  - wait
+
   - trigger: "kaniko"
     label: ":buildkite: Trigger build pipeline"
     build:
@@ -11,4 +20,3 @@ steps:
         REGISTRY_REPOSITORY: local-docker
         IMAGE_NAME: ticket-service
         IMAGE_TAG: latest
-        BITBUCKET_CONTEXT_REPO: "${BUILDKITE_GIT_REPO}"
