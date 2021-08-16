@@ -1,7 +1,7 @@
 ---
 steps:
   - label: ":package: Package repository"
-    command: ".buildkite/steps/kaniko/package.sh"
+    command: ".buildkite/scripts/package.sh"
     agents:
       env: kubernetes
       namespace: services
