@@ -3,7 +3,8 @@
 set -euo pipefail
 
 # package repository into tar.gz file
-tar=$(git archive --format tar HEAD | gzip > archive-HEAD.tar.gz)
+tarfile=$(basename "$(git config --get remote.origin.url)".tar.gz)
+git archive --verbose --format tar.gz --output "$tarfile" HEAD
 
 # upload to buildkite artifactory
-buildkite-agent artifact upload <<< "$tar"
+buildkite-agent artifact upload <<< "$tarfile"
