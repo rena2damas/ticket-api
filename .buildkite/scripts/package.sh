@@ -3,10 +3,14 @@
 set -euo pipefail
 
 # package repository into tar.gz file
-tarfile=$(basename "$(git config --get remote.origin.url)" .git).tar.gz
+tarfile=${IMAGE_NAME}.tar.gz
 git archive --verbose --format tar.gz --output "$tarfile" HEAD
 
-
+jfrog rt upload \
+--url "$REGISTRY" \
+--user "$REGISTRY_USER" \
+--apikey "$REGISTRY_TOKEN" \
+-- "$tarfile" "artifactory/${REGISTRY_REPOSITORY}/${tarfile}"
 
 # upload to buildkite artifactory (for reference only)
 buildkite-agent artifact upload "$tarfile"
