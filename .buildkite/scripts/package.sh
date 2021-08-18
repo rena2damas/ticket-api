@@ -7,7 +7,7 @@ tarfile=${IMAGE_NAME}.tar.gz
 git archive --verbose --format tar.gz --output "$tarfile" HEAD
 
 jfrog rt upload \
---url "$REGISTRY" \
+--url "https://${REGISTRY}" \
 --user "$REGISTRY_USER" \
 --apikey "$REGISTRY_TOKEN" \
 -- "$tarfile" "artifactory/${REGISTRY_REPOSITORY}/${tarfile}"
