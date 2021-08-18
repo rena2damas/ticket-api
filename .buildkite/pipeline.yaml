@@ -15,6 +15,11 @@ steps:
       message: "${BUILDKITE_MESSAGE}"
       commit: HEAD
       branch: "${BUILDKITE_BRANCH}"
+      env:
+        REGISTRY: "${REGISTRY}"
+        REGISTRY_REPOSITORY: "${REGISTRY_REPOSITORY}"
+        IMAGE_NAME: "${IMAGE_NAME}"
+        IMAGE_TAG: "${IMAGE_TAG}"
 
 env:
   REGISTRY: renatodamas.jfrog.io
