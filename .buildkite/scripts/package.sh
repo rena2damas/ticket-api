@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # package repository into tar.gz file
-tarfile=${IMAGE_NAME}.tar.gz
+tarfile="${IMAGE_NAME}:${IMAGE_TAG}.tar.gz"
 git archive --verbose --format tar.gz --output "$tarfile" HEAD
 
 jfrog rt upload \
