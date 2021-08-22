@@ -17,7 +17,7 @@ RUN pip install -r requirements.txt
 COPY src/ src/
 
 # get configurations
-COPY .env* .
+COPY *.env .
 COPY .flaskenv .
 
 # run process as non root
