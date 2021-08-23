@@ -2,3 +2,4 @@
 
 set -euo pipefail
 
+kubectl replace -k ...
