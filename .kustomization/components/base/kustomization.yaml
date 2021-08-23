@@ -6,7 +6,3 @@ resources:
   - configmap.yaml
   - sa.yaml
   - rbac.yaml
-images:
-  - name: ticket-service
-    newName: ...
-    newTag: latest

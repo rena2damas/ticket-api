@@ -6,3 +6,7 @@ resources:
   - base/
   - api/
   - bridge/
+images:
+  - name: ticket-service
+    newName: ...
+    newTag: latest
