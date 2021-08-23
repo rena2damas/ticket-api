@@ -4,4 +4,3 @@ kind: Kustomization
 namespace: services
 resources:
   - pod.yaml
-  - ../base/
