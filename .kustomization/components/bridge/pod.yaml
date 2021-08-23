@@ -10,11 +10,9 @@ metadata:
     a8r.io/description: "Batch service for creating tickets out of mailbox events"
     a8r.io/owner: renatodamas
 spec:
-  imagePullSecrets:
-    - name: registry-credentials
   containers:
     - name: ticket-job
-      image: ${IMAGE}:${TAG}
+      image: ticket-service:latest
       imagePullPolicy: Always
       command: [ "flask", "o365", "handle-incoming-email" ]
       envFrom:
@@ -32,4 +30,5 @@ spec:
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
+  serviceAccountName: ticket-service
   restartPolicy: OnFailure
