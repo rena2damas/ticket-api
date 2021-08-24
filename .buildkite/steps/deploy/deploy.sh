@@ -9,8 +9,15 @@ if ! kubectl get deployment --selector app=ticket-api ||
 else
   # base location for services
   basedir=".kustomization/components/"
+  kustomize edit set image "${REGISTRY}/${REGISTRY_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
 
-  # restart services
-  kubectl replace --force -f "${basedir}/api/deployment.yaml"
-  kubectl replace --force -f "${basedir}/bridge/pod.yaml"
+  # restart api service
+  kustomize build "${basedir}/api/deployment.yaml" | kubectl apply -f -
+  kubectl logs --selector app=ticket-api --follow &
+  kubectl wait --for condition=running --timeout=300s pods/ticket-api
+
+  # restart bridge service
+  kustomize build "${basedir}/bridge/pod.yaml" | kubectl apply -f -
+  kubectl logs --selector app=ticket-bridge --follow &
+  kubectl wait --for condition=running --timeout=300s pods/ticket-bridge
 fi
