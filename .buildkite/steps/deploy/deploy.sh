@@ -30,8 +30,8 @@ kubectl logs --selector app=ticket-api --follow &
 kubectl logs --selector app=ticket-bridge --follow &
 
 # wait service conclusion
-kubectl wait --for condition=running --timeout=300s pods/ticket-api
-kubectl wait --for condition=running --timeout=300s pods/ticket-bridge
+kubectl wait --for condition=ready --timeout=300s --selector app=ticket-api pod
+kubectl wait --for condition=ready --timeout=300s --selector app=ticket-bridge pod
 
 # cleanup
 cd "$cwd"
