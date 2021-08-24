@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if ! kubectl get deployment --selector app=ticket-api ||
-   ! kubectl get pod --selector app=ticket-bridge ; then
+  ! kubectl get pod --selector app=ticket-bridge; then
   echo "--- :boom: Missing resources"
   exit 1
 else
