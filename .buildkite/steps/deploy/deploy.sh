@@ -8,8 +8,9 @@ if ! kubectl get deployment --selector app=ticket-api ||
   exit 1
 else
   # base location for services
-  basedir=".kustomization/components/"
-  kustomize edit set image "${REGISTRY}/${REGISTRY_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
+  basedir=".kustomization/components"
+  newImage="${REGISTRY}/${REGISTRY_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
+  (cd "${basedir}/" && kustomize edit set image "$newImage")
 
   # restart api service
   kustomize build "${basedir}/api/deployment.yaml" | kubectl apply -f -
