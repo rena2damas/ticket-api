@@ -6,11 +6,12 @@ if ! kubectl get deployment --selector app=ticket-api ||
   ! kubectl get pod --selector app=ticket-bridge; then
   echo "--- :boom: Missing resources"
   exit 1
+fi
 
 # create kustomization context
 cwd=$(pwd)
 tmpdir=$(mktemp -dt tmp.deploy.XXXXXX)
-cd $tmpdir
+cd "$tmpdir"
 
 basedir=".kustomization/components"
 newImage="${REGISTRY}/${REGISTRY_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
@@ -31,5 +32,5 @@ kubectl wait --for condition=running --timeout=300s pods/ticket-api
 kubectl wait --for condition=running --timeout=300s pods/ticket-bridge
 
 # cleanup
-cd $cwd
+cd "$cwd"
 rm -rf -- "$tmpdir"
