@@ -22,10 +22,10 @@ newImage="${REGISTRY}/${REGISTRY_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
 kustomize create
 kustomize edit add resource api/deployment.yaml
 kustomize edit add resource bridge/pod.yaml
-kustomize edit set image "$newImage"
+kustomize edit set image "${IMAGE_NAME}=${newImage}"
 
 # restart api & bridge service
-kustomize build . | kubectl replace -f -
+kustomize build . | kubectl replace --force -f -
 kubectl logs --selector app=ticket-api --follow &
 kubectl logs --selector app=ticket-bridge --follow &
 
