@@ -14,12 +14,14 @@ tmpdir=$(mktemp -dt tmp.deploy.XXXXXX)
 cd "$tmpdir"
 
 basedir=".kustomization/components"
+rsync "${cwd}/${basedir}/api/deployment.yaml" api/
+rsync "${cwd}/${basedir}/bridge/pod.yaml" bridge/
 newImage="${REGISTRY}/${REGISTRY_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
 
 # set kustomization file used to restart services
 kustomize create
-kustomize edit add resource "${cwd}/${basedir}/api/deployment.yaml"
-kustomize edit add resource "${cwd}/${basedir}/bridge/pod.yaml"
+kustomize edit add resource api/deployment.yaml
+kustomize edit add resource bridge/pod.yaml
 kustomize edit set image "$newImage"
 
 # restart api & bridge service
