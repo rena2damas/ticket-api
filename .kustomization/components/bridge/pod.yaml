@@ -11,7 +11,7 @@ metadata:
     a8r.io/owner: renatodamas
 spec:
   containers:
-    - name: ticket-job
+    - name: ticket-bridge
       image: ticket-service:latest
       imagePullPolicy: Always
       command: [ "flask", "o365", "handle-incoming-email" ]
@@ -22,11 +22,11 @@ spec:
             name: ticket-service
       resources:
         limits:
-          cpu: 100m
-          memory: 100Mi
+          cpu: 500m
+          memory: 256Mi
         requests:
-          cpu: 100m
-          memory: 100Mi
+          cpu: 1000m
+          memory: 500Mi
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
