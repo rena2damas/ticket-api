@@ -13,14 +13,14 @@ ENV PYTHONUNBUFFERED 1
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+# run process as non root
+USER 1000:1000
+
 # copy the content of the local src directory to the working directory
 COPY src/ src/
 
 # get configurations
 COPY .flaskenv .env* ./
-
-# run process as non root
-USER 1000:1000
 
 # command to run on container start
 CMD [ "flask", "run" ]
