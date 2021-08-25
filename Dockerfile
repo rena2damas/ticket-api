@@ -14,13 +14,14 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # run process as non root
-USER 1000:1000
+ARG USER=1000:1000
+USER $USER
 
 # copy the content of the local src directory to the working directory
-COPY src/ src/
+COPY --chown=$USER src/ src/
 
 # get configurations
-COPY .flaskenv .env* ./
+COPY --chown=$USER .flaskenv .env* ./
 
 # command to run on container start
 CMD [ "flask", "run" ]
