@@ -2,6 +2,39 @@
 
 A service for managing emails coming in/out from/to a O365 mailbox and integrates them with Jira.
 
+## Install
+
+Because installing an application is always the first step, lets jump right into the different way on achieving it. This
+project can be installed in several ways, depending on what the target platform is.
+
+### Python
+
+If the project is meant to run as a ```python``` project, the recommended way of going about it is setting up a virtual
+environment with ```virtualenv``` or ```anaconda```.
+
+Using ```conda``` as an example, the sequence of instructions would look like this:
+
+```bash
+conda create ticket-service/ python=3.8
+conda activate ticket-service/
+pip install -r requirements.txt
+```
+
+### Kubernetes
+
+A description on the ```kubernetes``` resources that describe the different components of the project are also included.
+These files are found under ```.kustomization/```. A quick installation can be done this way:
+
+```bash
+ENV=dev  # change to prd (production), if applicable
+cd .kustomization/
+kubectl -k apply overlays/${ENV}/
+```
+
+And it's as simple as that! All the services should now be up and running.
+
+For more information on this, check [README.md](.kustomization/README.md) under ```.kustomization/``` directory.
+
 ## How does it work?
 
 This service is suitable for anyone looking to create Jira tickets from the emails arriving to a mailbox. The motivation
@@ -191,8 +224,8 @@ For local development, one will be running the service on ```localhost```. There
 environment comes in handy. If using ```conda```, the setup would look like this:
 
 ```bash
-conda create -p ticket-manager/ python=3
-conda activate ticket-manager/
+conda create ticket-service/ python=3
+conda activate ticket-service/
 pip install -r requirements
 
 # ready to go !

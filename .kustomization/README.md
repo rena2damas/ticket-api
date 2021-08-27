@@ -1,6 +1,6 @@
 # Ticket service
 
-Kubernetes configuration files for the ticket manager service. Full details on this service can be
+Kubernetes configuration files for the ticket service. Full details on this service can be
 found [here](https://github.com/rena2damas/ticket-manager).
 
 ## Install
