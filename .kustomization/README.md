@@ -1,4 +1,4 @@
-# Ticket service
+# Kustomization
 
 This directory contains the ```kubernetes``` resources that provide a description on the different components for this
 project. To do so, it resorts to ```kustomize```, a tool that allows the management of ```kubernetes``` resource objects
