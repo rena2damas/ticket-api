@@ -221,14 +221,9 @@ $ flask o365 check-for-missing-tickets --help
 ### Local development
 
 For local development, one will be running the service on ```localhost```. Therefore, it is recommended to set up a
-```python``` environment, as mentioned [here](#Python):
+```python``` environment, as mentioned [here](#Python).
 
-Then cli commands are ready to use, like so:
-
-```bash
-flask run
-...
-```
+Past that, cli commands are then ready to use.
 
 ### Dependencies
 
