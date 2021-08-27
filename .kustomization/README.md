@@ -1,8 +1,8 @@
 # Kustomization
 
-This directory contains the ```kubernetes``` resources that provide a description on the different components for this
-project. To do so, it resorts to ```kustomize```, a tool that allows the management of ```kubernetes``` resource objects
-using ```kustomization.yaml``` files.
+This directory contains the ```kubernetes``` resource manifests that provide a description on the different components
+for this project. To do so, it resorts to ```kustomize```, a tool that allows the management of ```kubernetes```
+resource objects using ```kustomization.yaml``` files.
 
 More information on that is found in ```kubernetes```
 documentation, [here](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)

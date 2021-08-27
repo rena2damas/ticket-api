@@ -22,8 +22,8 @@ pip install -r requirements.txt
 
 ### Kubernetes
 
-A description on the ```kubernetes``` resources that describe the different components of the project are also included.
-These files are found under ```.kustomization/```. A quick installation can be done this way:
+The ```kubernetes``` resource manifests that describe the different components of the project are also included. These
+files are found under ```.kustomization/```. A quick installation can be done this way:
 
 ```bash
 ENV=dev  # change to prd (production), if applicable
