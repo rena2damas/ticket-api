@@ -220,15 +220,12 @@ $ flask o365 check-for-missing-tickets --help
 
 ### Local development
 
-For local development, one will be running the service on ```localhost```. Therefore, setting up a local python
-environment comes in handy. If using ```conda```, the setup would look like this:
+For local development, one will be running the service on ```localhost```. Therefore, it is recommended to set up a
+```python``` environment, as mentioned [here](#Python):
+
+Then cli commands are ready to use, like so:
 
 ```bash
-conda create ticket-service/ python=3
-conda activate ticket-service/
-pip install -r requirements
-
-# ready to go !
 flask run
 ...
 ```
