@@ -59,7 +59,7 @@ Based on the target environment, one should use the right overlay.
 For instance, to have a development environment running for this service, it would be achieved this way:
 
 ```bash
-$ kubctl apply -k overlays/env
+$ kubctl apply -k overlays/dev/
 ```
 
 Note: it is required to seal the secrets first, as mentioned in [this](#Secret-management) section, before applying
