@@ -34,7 +34,7 @@ of ```kustomize``` and ```kubeseal``` is needed for this process.
 Starting off by running the command below:
 
 ```bash
-kustomize build .kustomization/overlays/dev/.secrets/
+$ kustomize build .kustomization/overlays/dev/.secrets/
 ```
 
 This produces a compilation of all the secrets needed in the project, and which need to be sealed individually.
