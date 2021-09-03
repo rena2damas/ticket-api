@@ -11,3 +11,4 @@ components:
   - ../../components/api/
   - ../../components/bridge/
   - configs/
+  - ingress/
