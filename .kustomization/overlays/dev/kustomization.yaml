@@ -6,8 +6,8 @@ namespace: services-dev
 resources:
   - ../../base/
   - secrets/sealed/
-  - configs/
 
 components:
   - ../../components/api/
   - ../../components/bridge/
+  - configs/
