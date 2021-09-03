@@ -6,6 +6,7 @@ namespace: services
 resources:
   - ../../base/
   - secrets/sealed/
+  - configs/
 
 components:
   - ../../components/api/
