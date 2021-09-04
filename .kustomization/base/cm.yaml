@@ -6,7 +6,7 @@ metadata:
 data:
 
   # database connection
-  SQLALCHEMY_DATABASE_URI: postgresql://ha-postgres:5432/ticketdb
+  SQLALCHEMY_DATABASE_URI: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}
 
   # application context
   APPLICATION_CONTEXT: /api/tickets/v3
