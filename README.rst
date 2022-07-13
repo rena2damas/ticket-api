@@ -188,17 +188,16 @@ This project takes advantage of several python packages that leverage the servic
    on ``werkzeug`` WSGI
 
 * `Flask-RESTful <https://pypi.org/project/Flask-RESTful/>`_: serve RESTful endpoints
-   in ``Flask``
-
+  in ``Flask``
 * `Flask-SQLAlchemy <https://pypi.org/project/Flask-SQLAlchemy/>`_: enable
 * `APISpec <https://pypi.org/project/apispec/>`_: the OpenAPI standard
-   ``SQLAlchemy`` support for ``Flask``
+  ``SQLAlchemy`` support for ``Flask``
 * `marshmallow <https://pypi.org/project/marshmallow/>`_: for API data serialization
 * `jira <https://pypi.org/project/jira/>`_: *pythonic* implementation for Jira REST API
 * `O365 <https://pypi.org/project/o365/>`_: *pythonic* implementation for Microsoft
-   Graph & Office 365 REST API
-* `O365-notifications <https://github.com/rena2damas/o365-notifications>`_: _pythonic_
-   implementation for O365 notifications
+  Graph & Office 365 REST API
+* `O365-notifications <https://github.com/rena2damas/o365-notifications>`_:
+  *pythonic* implementation for O365 notifications
 
 CLI Commands
 ------------
