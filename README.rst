@@ -186,8 +186,10 @@ This project takes advantage of several python packages that leverage the servic
 
 * `Flask <https://pypi.org/project/Flask/>`_: famous application web framework based
    on ``werkzeug`` WSGI
+
 * `Flask-RESTful <https://pypi.org/project/Flask-RESTful/>`_: serve RESTful endpoints
    in ``Flask``
+
 * `Flask-SQLAlchemy <https://pypi.org/project/Flask-SQLAlchemy/>`_: enable
 * `APISpec <https://pypi.org/project/apispec/>`_: the OpenAPI standard
    ``SQLAlchemy`` support for ``Flask``
