@@ -105,6 +105,8 @@ A possible configuration is:
     EMAIL_WHITELISTED_DOMAINS=example.com
     EMAIL_BLACKLIST=malicious@example.com
 
+Note ⚠️: one should use ``configmap`` and ``secret`` instead when configuring it for
+``kubernetes``.
 
 O365 Auth
 ^^^^^^^^^
@@ -131,3 +133,69 @@ terminal, and it's done.
 A new file ``o365_token.txt`` will be created which contains all the important OAuth2 parameters such as
 the ``access_token`` and ``refresh_token``. The ``refresh_token`` has a duration of 90 days after which it
 expires, so one must repeat the process just described to request new access codes.
+
+Run 🚀
+====
+To start listening for incoming events (aka emails), it would go like this:
+
+.. code-block:: bash
+
+    $ flask o365 handle-incoming-email
+    > ... INFO in o365: Account already authenticated.
+    > ... INFO in o365_mailbox: Start streaming connection for 'users/me@example.com' ...
+    > ... INFO in base: Open new events channel ...
+    > ...
+
+A new streaming connection is then initiated between our service and the ``O365`` notification service. From this
+moment on, as soon as a new email reaches the inbox folder, a Jira API request is performed, and a new ticket is
+created.
+
+A thorough explanation on how the notification streaming mechanism works, can be
+found `here <https://github.com/rena2damas/o365-notifications>`_.
+
+Webserver API
+-------------
+This project also comprises a ``Flask`` RESTful web server where a user can query to create, update and manage
+tickets. Each endpoint is properly documented under `OpenAPI 3 standard <https://swagger.io/specification/>`_ which makes
+easy for humans and third party services to understand and talk to.
+
+For a quick run with ``Flask``, run it like:
+
+.. code-block:: bash
+
+    $ poetry run flask run
+
+Configure ``flask`` environments with environment variables or in a ``.flaskenv`` file.
+
+``Flask`` uses ``Werkzeug`` which is a ``WSGI`` library intended for development
+purposes. Do not use it in production! For a production like environment, one should
+use instead a production server, like ``gunicorn``:
+
+.. code-block:: bash
+
+    $ poetry run gunicorn src.app:create_app
+
+Tests & linting 🚥
+===============
+Run tests with ``tox``:
+
+.. code-block:: bash
+
+    # ensure tox is installed
+    $ tox
+
+Run linter only:
+
+.. code-block:: bash
+
+    $ tox -e lint
+
+Optionally, run coverage as well with:
+
+.. code-block:: bash
+
+    $ tox -e coverage
+
+License
+=======
+MIT licensed. See `LICENSE <LICENSE>`_.
