@@ -222,35 +222,29 @@ class ProxyJIRA(JIRA):
             ]
 
             # translate boards into filters
-            filters = [
-                self.get_board_filter(board_id=board_id) for board_id in board_ids
-            ]
-            jql += "&filter in ({})".format(
-                ", ".join([filter_.id for filter_ in filters])
-            )
+            filters = [self.get_board_filter(board_id=bid) for bid in board_ids]
+            jql = f"{jql}&filter in ({', '.join((f.id for f in filters))})"
         if summary:
-            jql += "&summary ~ '" + summary + "'"
+            jql = f"{jql}&summary ~ '{summary}'"
         if key:
-            jql += "&key in ({})".format(
-                ", ".join(key) if isinstance(key, list) else key
-            )
+            joined_keys = ", ".join(key) if isinstance(key, list) else key
+            jql = f"{jql}&key in ({joined_keys})"
         if assignee:
-            jql += "&assignee=" + assignee
+            jql = f"{jql}&assignee={assignee}"
         if status:
-            jql += "&status='" + status + "'"
+            jql = f"{jql}&status='{status}'"
         if labels:
             for label in labels:
-                jql += f"&labels={label}"
+                jql = f"{jql}&labels={label}"
         if tags:
-            jql += "&labels in ({})".format(
-                ", ".join(tags) if isinstance(tags, list) else key
-            )
+            joined_tags = ", ".join(tags)
+            jql = f"{jql}&labels in ({joined_tags})"
         if watcher:
-            jql += "&watcher=" + watcher
+            jql = f"{jql}&watcher=" + watcher
         if expand:
-            jql += "&expand=" + ",".join(expand)
+            jql = f"{jql}&expand={','.join(expand)}"
         if sort:
-            jql += " ORDER BY " + sort
+            jql = f"{jql} ORDER BY {sort}"
 
         # remove trailing url character
         jql = jql.lstrip("&")
