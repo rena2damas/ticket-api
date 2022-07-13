@@ -153,8 +153,8 @@ created.
 A thorough explanation on how the notification streaming mechanism works, can be
 found `here <https://github.com/rena2damas/o365-notifications>`_.
 
-Webserver API
--------------
+REST API
+--------
 This project also comprises a ``Flask`` RESTful web server where a user can query to create, update and manage
 tickets. Each endpoint is properly documented under `OpenAPI 3 standard <https://swagger.io/specification/>`_ which makes
 easy for humans and third party services to understand and talk to.
@@ -174,6 +174,63 @@ use instead a production server, like ``gunicorn``:
 .. code-block:: bash
 
     $ poetry run gunicorn src.app:create_app
+
+Additional information
+======================
+For those who are more curious, this section adds a some more information on this
+project.
+
+Core packages
+--------------
+This project takes advantage of several python packages that leverage the service implementation. The core packages are:
+
+* `Flask <https://pypi.org/project/Flask/>`_: famous application web framework based
+on ``werkzeug`` WSGI
+* `Flask-RESTful <https://pypi.org/project/Flask-RESTful/>`_: serve RESTful endpoints
+in ``Flask``
+* `APISpec <https://pypi.org/project/apispec/>`_: the OpenAPI standard
+* `Flask-SQLAlchemy <https://pypi.org/project/Flask-SQLAlchemy/>`_: enable
+``SQLAlchemy`` support for ``Flask``
+* `marshmallow <https://pypi.org/project/marshmallow/>`_: for data API serialization
+* `jira <https://pypi.org/project/jira/>`_: _pythonic_ implementation for Jira REST API
+* `O365 <https://pypi.org/project/o365/>`_: _pythonic_ implementation for Microsoft
+Graph & Office 365 REST API
+* `O365-notifications <https://github.com/rena2damas/o365-notifications>`_: _pythonic_
+implementation for O365 notifications
+
+CLI Commands
+------------
+The list of available supported operations is given by running the command:
+
+.. code-block:: bash
+
+    $ flask
+    > ...
+
+As any ``Flask`` application, the ``run`` and ``shell`` operations are present.
+Additionally, a set of commands to manage ``O365`` are also provided:
+
+.. code-block:: bash
+
+    $ flask o365
+    ...
+    > authenticate               Set code used for OAuth2 authentication.
+    > check-for-missing-tickets  Check for possible tickets that went missing...
+    > handle-incoming-email      Handle incoming email.
+
+Each command contains its own instructions and properties. Enable ``--help`` flag to get
+for more information on a command. Take the example below:
+
+.. code-block:: bash
+
+    $ flask o365 check-for-missing-tickets --help
+    > Usage: flask o365 check-for-missing-tickets [OPTIONS]
+    >
+    >   Check for possible tickets that went missing in the last days.
+    >
+    > Options:
+    >   -d, --days TEXT  number of days to search back
+    >   --help           Show this message and exit.
 
 Tests & linting 🚥
 ===============
@@ -198,4 +255,4 @@ Optionally, run coverage as well with:
 
 License
 =======
-MIT licensed. See `LICENSE <LICENSE>`_.
+GPLv3 licensed. See `LICENSE <LICENSE>`_.
