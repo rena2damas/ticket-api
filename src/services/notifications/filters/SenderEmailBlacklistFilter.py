@@ -4,7 +4,7 @@ from src.services.notifications.filters.OutlookMessageFilter import OutlookMessa
 
 
 class SenderEmailBlacklistFilter(OutlookMessageFilter):
-    """ Filter for message whose sender email is not blacklisted """
+    """Filter for message whose sender email is not blacklisted"""
 
     def __init__(self, blacklist):
         self.blacklist = blacklist
@@ -15,6 +15,8 @@ class SenderEmailBlacklistFilter(OutlookMessageFilter):
 
         sender_email = message.sender.address
         if sender_email in self.blacklist:
-            current_app.logger.info('Message skipped as the sender\'s email \'{0}\' is blacklisted.'.format(sender_email))
+            current_app.logger.info(
+                f"Message skipped as the sender's email '{sender_email}' is blacklisted."
+            )
             return None
         return message
