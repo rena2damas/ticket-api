@@ -185,8 +185,7 @@ Core packages
 This project takes advantage of several python packages that leverage the service implementation. The core packages are:
 
 * `Flask <https://pypi.org/project/Flask/>`_ : famous application web framework based
-   on ``werkzeug`` WSGI
-
+  on ``werkzeug`` WSGI
 * `Flask-RESTful <https://pypi.org/project/Flask-RESTful/>`_: serve RESTful endpoints
   in ``Flask``
 * `Flask-SQLAlchemy <https://pypi.org/project/Flask-SQLAlchemy/>`_: enable
