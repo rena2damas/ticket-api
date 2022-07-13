@@ -63,7 +63,7 @@ class ProxyJIRA(JIRA):
             return True
 
     def comment(self, issue, comment, expand=None):
-        """Method overload to include expand field."""
+        """Method overloaded to include expand field."""
         return self._find_for_resource(jira.Comment, (issue, comment), expand=expand)
 
     def has_permissions(self, permissions, **kwargs):
@@ -84,9 +84,7 @@ class ProxyJIRA(JIRA):
         issue_id=None,
         permissions=None,
     ):
-        """Overridden method.
-
-        Introduced param permissions.
+        """Override.
 
         :param project_key: see overridden method
         :param project_id: see overridden method
