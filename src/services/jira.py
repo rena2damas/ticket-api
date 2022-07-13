@@ -347,15 +347,16 @@ class JiraService(ProxyJIRA):
                     try:
                         self.add_watcher(issue=str(issue), watcher=watcher.accountId)
                     except jira.exceptions.JIRAError as e:
-                        if e.status_code in (
+                        if e.status_code not in (
                             requests.codes.unauthorized,
                             requests.codes.forbidden,
                         ):
-                            msg = f"Watcher '{watcher.displayName}' has no permission "
-                            f"to watch issue '{str(issue)}'."
-                            current_app.logger.warning(msg)
-                        else:
                             raise e
+                        else:
+                            name = watcher.displayName
+                            msg = f"Watcher '{name}' has no permission to watch issue "
+                            f"'{str(issue)}'."
+                            current_app.logger.warning(msg)
         else:
             msg = "The 'me' user has no permission to manage watchers."
             current_app.logger.warning(msg)
