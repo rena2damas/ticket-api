@@ -351,17 +351,14 @@ class JiraService(ProxyJIRA):
                             requests.codes.unauthorized,
                             requests.codes.forbidden,
                         ):
-                            current_app.logger.warning(
-                                "Watcher '{}' has no permission to watch issue '{}'.".format(
-                                    watcher.displayName, str(issue)
-                                )
-                            )
+                            msg = f"Watcher '{watcher.displayName}' has no permission "
+                            f"to watch issue '{str(issue)}'."
+                            current_app.logger.warning(msg)
                         else:
                             raise e
         else:
-            current_app.logger.warning(
-                "The 'me' user has no permission to manage watchers."
-            )
+            msg = "The 'me' user has no permission to manage watchers."
+            current_app.logger.warning(msg)
 
     @staticmethod
     def is_jira_filter(filter_):
