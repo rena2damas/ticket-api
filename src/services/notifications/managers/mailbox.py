@@ -295,7 +295,7 @@ class O365MailboxManager:
         return reply
 
     @staticmethod
-    def get_message_json(message: O365.Message):
+    def message_json(message: O365.Message):
         """Get json information from message."""
         soup = O365.message.bs(message.unique_body, "html.parser")
 

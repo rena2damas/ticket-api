@@ -19,16 +19,16 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
 
     def __init__(self, mailbox: O365.mailbox):
         self.mailbox = mailbox
-        self._jira = JiraSvc()
 
     def apply(self, message):
         if not message:
             return None
 
         if message.sender.address.split("@")[1] == "automation.atlassian.com":
+            svc = JiraSvc()
 
             # get json content from message
-            data = O365MailboxManager.get_message_json(message)
+            data = O365MailboxManager.message_json(message)
 
             model = TicketSvc.find_one(key=data["ticket"], _model=True)
 
@@ -49,7 +49,7 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
             else:
 
                 # get the specific comment
-                comment = self._jira.comment(
+                comment = svc.comment(
                     issue=data["ticket"], comment=data["id"], expand="renderedBody"
                 )
 
@@ -58,7 +58,7 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
                     pattern=r'src="(.*?)"',
                     repl=lambda x: r'src="data:image/jpeg;base64,{}"'.format(
                         converters.encode_content(
-                            self._jira.get_content(
+                            svc.get_content(
                                 path=x.group(1), base="{server}{path}"
                             )
                         )

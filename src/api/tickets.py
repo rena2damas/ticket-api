@@ -51,8 +51,9 @@ class Tickets(Resource):
 
         # read params and set defaults
         params = request.args.copy()
+        boards = params.poplist("boards") or (b.key for b in JiraSvc().boards())
         filters = {
-            "boards": params.poplist("boards") or JiraSvc.supported_board_keys(),
+            "boards": boards,
             "categories": params.poplist("categories")
             or JiraSvc.supported_categories(),
             "fields": params.poplist("fields"),
