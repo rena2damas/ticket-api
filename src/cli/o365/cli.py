@@ -20,7 +20,7 @@ cli = AppGroup(
 )
 
 
-def authenticate_account(mailbox=None, retries=0):
+def authenticate_account(email=None, retries=0):
     """Authenticate an O365 account."""
     credentials = (current_app.config["O365_CLIENT_ID"], None)
     protocol = MSOffice365Protocol(api_version="beta")
@@ -28,7 +28,7 @@ def authenticate_account(mailbox=None, retries=0):
         credentials,
         protocol=protocol,
         tenant_id=current_app.config["O365_TENANT_ID"],
-        main_resource=mailbox or current_app.config["MAILBOX"],
+        main_resource=email or current_app.config["MAILBOX"],
         request_retries=retries,
         token_backend=DatabaseTokenBackend(),
     )
@@ -45,29 +45,29 @@ def authenticate_account(mailbox=None, retries=0):
     return account
 
 
-def create_mailbox_manager(mailbox=None, **kwargs):
+def create_mailbox_manager(email: str = None, **kwargs):
     """Create the mailbox manager."""
-    mailbox = mailbox or current_app.config["MAILBOX"]
-    account = authenticate_account(mailbox=mailbox, **kwargs)
-    o365_mailbox = account.mailbox()
+    email = email or current_app.config["MAILBOX"]
+    account = authenticate_account(email=email, **kwargs)
+    mailbox = account.mailbox()
 
     mailbox_notifications = O365MailBoxStreamingNotifications(
-        parent=o365_mailbox, change_type=O365Notification.ChangeType.CREATED.value
+        parent=mailbox, change_type=O365Notification.ChangeType.CREATED.value
     )
 
     # Change Id alias to the real id for the 'RecipientsFilter' object
-    sent_folder = o365_mailbox.sent_folder()
+    sent_folder = mailbox.sent_folder()
     sent_folder = sent_folder.get_folder(folder_id=sent_folder.folder_id)
 
     # the O365 mailbox manager
     whitelist = current_app.config["EMAIL_WHITELISTED_DOMAINS"]
     blacklist = current_app.config["EMAIL_BLACKLIST"]
     manager = (
-        O365MailboxManager(mailbox=o365_mailbox)
+        O365MailboxManager(mailbox=mailbox)
         .subscriber(mailbox_notifications)
         .filters(
             [
-                JiraCommentNotificationFilter(mailbox=o365_mailbox),
+                JiraCommentNotificationFilter(mailbox=mailbox),
                 RecipientsFilter(recipient_reference=mailbox, sent_folder=sent_folder),
                 SenderEmailBlacklistFilter(blacklist=blacklist),
                 SenderEmailDomainWhitelistedFilter(whitelisted_domains=whitelist),
@@ -84,7 +84,7 @@ def create_mailbox_manager(mailbox=None, **kwargs):
 @click.option("--retries", "-r", default=0, help="number of retries when request fails")
 def authenticate(mailbox=None, retries=0):
     """Set code used for OAuth2 authentication."""
-    return authenticate_account(mailbox=mailbox, retries=retries)
+    return authenticate_account(email=mailbox, retries=retries)
 
 
 @cli.command()
@@ -92,14 +92,13 @@ def authenticate(mailbox=None, retries=0):
 @click.option("--retries", "-r", default=0, help="number of retries when request fails")
 def handle_incoming_email(mailbox, retries):
     """Handle incoming email."""
-    manager = create_mailbox_manager(mailbox=mailbox, retries=retries)
+    manager = create_mailbox_manager(email=mailbox, retries=retries)
 
     # Start listening for incoming notifications...
+    config = current_app.config
     manager.start_streaming(
-        connection_timeout=current_app.config["CONNECTION_TIMEOUT_IN_MINUTES"],
-        keep_alive_interval=current_app.config[
-            "KEEP_ALIVE_NOTIFICATION_INTERVAL_IN_SECONDS"
-        ],
+        connection_timeout=config["CONNECTION_TIMEOUT_IN_MINUTES"],
+        keep_alive_interval=config["KEEP_ALIVE_NOTIFICATION_INTERVAL_IN_SECONDS"],
         refresh_after_expire=True,
     )
 
