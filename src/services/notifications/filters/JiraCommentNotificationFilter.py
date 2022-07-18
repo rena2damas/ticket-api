@@ -44,9 +44,8 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
                 last_message = self.mailbox.get_message(object_id=last_message_id)
             except requests.exceptions.HTTPError as e:
                 if e.response.status_code == requests.codes.not_found:
-                    current_app.logger.warning(
-                        "Message to reply to was not found. No email was sent."
-                    )
+                    msg = "Message to reply to was not found. No email was sent."
+                    current_app.logger.warning(msg)
             else:
 
                 # get the specific comment
