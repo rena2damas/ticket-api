@@ -5,7 +5,7 @@ from O365 import Account, MSOffice365Protocol
 from o365_notifications.base import O365Notification
 from o365_notifications.streaming.mailbox import O365MailBoxStreamingNotifications
 
-from src.services.notifications.managers.mailbox import O365MailboxManager
+from src.cli.o365.backend import DatabaseTokenBackend
 from src.services.notifications.filters import (
     JiraCommentNotificationFilter,
     RecipientsFilter,
@@ -13,7 +13,7 @@ from src.services.notifications.filters import (
     SenderEmailDomainWhitelistedFilter,
     ValidateMetadataFilter,
 )
-from src.cli.o365.DatabaseTokenBackend import DatabaseTokenBackend
+from src.services.notifications.managers.mailbox import O365MailboxManager
 
 cli = AppGroup(
     "o365", short_help="Handle O365 operations, mostly to handle Outlook events"
