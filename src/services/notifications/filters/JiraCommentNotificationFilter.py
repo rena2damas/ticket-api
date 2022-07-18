@@ -6,9 +6,9 @@ from flask import current_app
 
 from src.utils import converters
 from src.services.jira import JiraSvc
-from src.services.ticket import TicketSvc
 from src.services.notifications.filters.OutlookMessageFilter import OutlookMessageFilter
 from src.services.notifications.managers.mailbox import O365MailboxManager
+from src.services.ticket import TicketSvc
 
 
 class JiraCommentNotificationFilter(OutlookMessageFilter):
