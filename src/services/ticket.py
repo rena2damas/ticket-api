@@ -149,9 +149,7 @@ class TicketSvc:
                 jql_str=query,
                 maxResults=limit,
                 validate_query=False,
-                fields=",".join(
-                    [field[:-1] if field.endswith("s") else field for field in fields]
-                ),
+                fields=",".join([f[:-1] if f.endswith("s") else f for f in fields]),
                 expand=rendered,
             )
 
