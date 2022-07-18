@@ -147,7 +147,7 @@ class Tickets(Resource):
             utils.abort_with(400, message=ex.text)
 
 
-@api.resource("/tickets/<key>", endpoint="ticket")
+@api.resource("/<key>", endpoint="ticket")
 class Ticket(Resource):
     def get(self, key):
         """
@@ -189,7 +189,7 @@ class Ticket(Resource):
             return IssueSchema().dump(result)
 
 
-@api.resource("/tickets/<key>/comment", endpoint="comment")
+@api.resource("/<key>/comment", endpoint="comment")
 class Comment(Resource):
     @flasgger.swag_from(
         {
@@ -269,7 +269,7 @@ class Comment(Resource):
             utils.abort_with(400, message=ex.text)
 
 
-@api.resource("/tickets/supported-boards", endpoint="supported-boards")
+@api.resource("/supported-boards", endpoint="supported-boards")
 class SupportedBoards(Resource):
     def get(self):
         """
@@ -290,7 +290,7 @@ class SupportedBoards(Resource):
         return [b.key for b in JiraSvc().boards()]
 
 
-@api.resource("/tickets/supported-categories", endpoint="supported-categories")
+@api.resource("/supported-categories", endpoint="supported-categories")
 class SupportedCategories(Resource):
     def get(self):
         """
