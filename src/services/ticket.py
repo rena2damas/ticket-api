@@ -2,6 +2,7 @@ import os
 import typing
 
 import jinja2
+import jira.resources
 from flask import current_app
 
 from src import db
@@ -246,7 +247,7 @@ class TicketSvc:
             svc.add_attachment(issue=issue, attachment=attachment)
 
     @staticmethod
-    def create_message_body(template=None, values=None):
+    def create_message_body(template=None, values=None) -> typing.Optional[str]:
         """Create the body of the ticket.
 
         :param template: the template to build ticket body from
@@ -268,7 +269,7 @@ class TicketSvc:
         return jinja2.Template(content).render(**values)
 
     @staticmethod
-    def user_by_email(email, default=None):
+    def user_by_email(email, default=None) -> jira.resources.User:
         """Email translation to Jira user."""
         svc = JiraSvc()
         return next(iter(svc.search_users(query=email, maxResults=1)), default)
