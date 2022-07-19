@@ -18,10 +18,3 @@ def openapi3_converters():
     apispec.schema2jsonschema = openapi_converter.schema2jsonschema
     apispec.schema2parameters = openapi_converter.schema2parameters
 
-
-def encode_content(content):
-    """Convert img src to base64 content bytes."""
-    data = base64.b64encode(content)  # encode to base64 (bytes)
-    data = data.decode()  # convert bytes to string
-
-    return data

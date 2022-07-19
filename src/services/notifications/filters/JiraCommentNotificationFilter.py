@@ -4,7 +4,7 @@ import requests
 import O365.mailbox
 from flask import current_app
 
-from src.utils import converters
+from src import utils
 from src.services.jira import JiraSvc
 from src.services.notifications.filters.OutlookMessageFilter import OutlookMessageFilter
 from src.services.notifications.managers.mailbox import O365MailboxManager
@@ -56,9 +56,9 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
                 # embed base64 images in message body
                 body = re.sub(
                     pattern=r'src="(.*?)"',
-                    repl=lambda x: r'src="data:image/jpeg;base64,{}"'.format(
-                        converters.encode_content(
-                            svc.content(path=x.group(1), base="{server}{path}")
+                    repl=lambda m: r'src="data:image/jpeg;base64,{}"'.format(
+                        utils.encode_content(
+                            svc.content(path=m.group(1), base="{server}{path}")
                         )
                     ),
                     string=comment.renderedBody,
