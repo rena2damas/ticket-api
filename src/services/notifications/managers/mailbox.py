@@ -61,11 +61,9 @@ class O365MailboxManager:
     def start_streaming(self, **kwargs):
         handler = JiraNotificationHandler(manager=self)
 
-        # set inbox/sent folder
+        # create subscriptions from inbox & sent folders
         inbox_folder = self._mailbox.inbox_folder()
         sent_folder = self._mailbox.sent_folder()
-
-        # define subscriptions
         inbox_subscription_id = self._subscriber.subscribe(resource=inbox_folder)
         sent_subscription_id = self._subscriber.subscribe(resource=sent_folder)
         subscriptions = [inbox_subscription_id, sent_subscription_id]
