@@ -51,11 +51,10 @@ def create_mailbox_manager(email: str = None, **kwargs):
     account = authenticate_account(email=email, **kwargs)
     mailbox = account.mailbox()
 
-    mailbox_notifications = O365MailBoxStreamingNotifications(
-        parent=mailbox, change_type=O365Notification.ChangeType.CREATED.value
-    )
+    ct = O365Notification.ChangeType.CREATED.value
+    notif = O365MailBoxStreamingNotifications(parent=mailbox, change_type=ct)
 
-    # Change Id alias to the real id for the 'RecipientsFilter' object
+    # Change id alias to the real id for the 'RecipientsFilter' object
     sent_folder = mailbox.sent_folder()
     sent_folder = sent_folder.get_folder(folder_id=sent_folder.folder_id)
 
@@ -64,7 +63,7 @@ def create_mailbox_manager(email: str = None, **kwargs):
     blacklist = current_app.config["EMAIL_BLACKLIST"]
     manager = (
         O365MailboxManager(mailbox=mailbox)
-        .subscriber(mailbox_notifications)
+        .subscriber(notif)
         .filters(
             [
                 JiraCommentNotificationFilter(mailbox=mailbox),
