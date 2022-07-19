@@ -27,9 +27,9 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
         if message.sender.address.split("@")[1] == "automation.atlassian.com":
             svc = JiraSvc()
 
-            data = O365MailboxManager.message_json(message)
+            payload = O365MailboxManager.message_json(message)
 
-            model = TicketSvc.find_one(key=data["ticket"], _model=True)
+            model = TicketSvc.find_one(key=payload["ticket"], _model=True)
             if not model:
                 current_app.logger.warning("Commented on ticket that was not found.")
                 return None
@@ -44,9 +44,11 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
                     current_app.logger.warning(msg)
             else:
 
-                # get the specific comment
+                # locate the specific comment given the
                 comment = svc.comment(
-                    issue=data["ticket"], comment=data["id"], expand="renderedBody"
+                    issue=payload["ticket"],
+                    comment=payload["id"],
+                    expand="renderedBody",
                 )
 
                 # embed base64 images in message body
@@ -65,7 +67,7 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
                     message=last_message,
                     values={
                         "body": body,
-                        "author": data["author"]["name"],
+                        "author": payload["author"]["name"],
                         "metadata": [
                             {"name": "message", "content": "relay jira comment"}
                         ],
