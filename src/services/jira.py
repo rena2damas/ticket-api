@@ -37,7 +37,7 @@ class ProxyJIRA(JIRA):
             **kwargs,
         )
 
-    def get_content(
+    def content(
         self,
         path: str,
         params: typing.Optional[str] = None,

@@ -58,7 +58,7 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
                     pattern=r'src="(.*?)"',
                     repl=lambda x: r'src="data:image/jpeg;base64,{}"'.format(
                         converters.encode_content(
-                            svc.get_content(path=x.group(1), base="{server}{path}")
+                            svc.content(path=x.group(1), base="{server}{path}")
                         )
                     ),
                     string=comment.renderedBody,
