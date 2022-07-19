@@ -27,6 +27,7 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
         if message.sender.address.split("@")[1] == "automation.atlassian.com":
             svc = JiraSvc()
 
+            # load message json payload
             payload = O365MailboxManager.message_json(message)
 
             model = TicketSvc.find_one(key=payload["ticket"], _model=True)
