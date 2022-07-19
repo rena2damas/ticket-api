@@ -107,10 +107,7 @@ class O365MailboxManager:
         )
 
         # skip message processing if message is filtered
-        if any(
-            not e
-            for e in list(map(lambda f: f.apply(message), self._filters))
-        ):
+        if any(not e for e in list(map(lambda f: f.apply(message), self._filters))):
             current_app.logger.info(f"Message '{message.subject}' filtered.")
             return
 
