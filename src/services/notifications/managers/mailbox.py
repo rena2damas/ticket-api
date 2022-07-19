@@ -76,7 +76,7 @@ class O365MailboxManager:
         )
 
     def process_message(self, message_id):
-        """Process a message (given its Id) for the creation of a ticket."""
+        """Process a message and create/update ticket."""
         svc = TicketSvc()
 
         # reading message from the corresponding folder
