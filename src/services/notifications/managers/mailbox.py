@@ -73,9 +73,9 @@ class O365MailboxManager:
         sent_subscription_id = self._subscriber.subscribe(resource=sent_folder)
         subscriptions = [inbox_subscription_id, sent_subscription_id]
 
-        current_app.logger.info(
-            f"Start streaming connection for '{self._mailbox.main_resource}' ..."
-        )
+        msg = f"Start streaming connection for '{self._mailbox.main_resource}' ..."
+        current_app.logger.info(msg)
+
         self._subscriber.create_event_channel(
             subscriptions=subscriptions, notification_handler=handler, **kwargs
         )
@@ -95,7 +95,7 @@ class O365MailboxManager:
             )
         )
 
-        current_app.logger.info("*** Processing new message ***")
+        current_app.logger.info("\n*** Processing new message ***")
         current_app.logger.info(
             json.dumps(
                 {
