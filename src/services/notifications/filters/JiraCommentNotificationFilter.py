@@ -71,7 +71,7 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
                         "body": body,
                         "author": data["author"]["name"],
                         "metadata": [
-                            dict(name="message", content="relay jira comment")
+                            {"name": "message", "content": "relay jira comment"}
                         ],
                     },
                 )
