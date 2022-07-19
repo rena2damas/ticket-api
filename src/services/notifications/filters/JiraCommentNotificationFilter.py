@@ -27,19 +27,15 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
         if message.sender.address.split("@")[1] == "automation.atlassian.com":
             svc = JiraSvc()
 
-            # get json content from message
             data = O365MailboxManager.message_json(message)
 
             model = TicketSvc.find_one(key=data["ticket"], _model=True)
-
-            # skip if ticket not defined
             if not model:
                 current_app.logger.warning("Commented on ticket that was not found.")
                 return None
 
-            # locate last lent message
+            # locate last lent message to reply on
             last_message_id = model.outlook_messages_id.split(",")[-1]
-
             try:
                 last_message = self.mailbox.get_message(object_id=last_message_id)
             except requests.exceptions.HTTPError as e:
