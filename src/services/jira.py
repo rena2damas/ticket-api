@@ -217,7 +217,7 @@ class JiraSvc(ProxyJIRA):
             name = v["name"]
             data = next((b for b in super().boards(name=name) if b.name == name), None)
             default = from_env(env(current_app.config["JIRA_DEFAULT_BOARD"]))
-            return Board(key=v["key"], raw=data["raw"], is_default=default == v)
+            return Board(key=v["key"], raw=data["raw"], is_default=(default == v))
 
         envs = [from_env(v) for v in current_app.config["JIRA_BOARDS"]]
         return [make_board(v) for v in envs]
