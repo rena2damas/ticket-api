@@ -9,9 +9,7 @@ from flask import current_app
 
 from src.models.ticket import Ticket
 from src.services.notifications.filters.OutlookMessageFilter import OutlookMessageFilter
-from src.services.notifications.handlers.JiraNotificationHandler import (
-    JiraNotificationHandler,
-)
+from src.services.notifications.handlers.jira import JiraNotificationHandler
 from src.services.ticket import TicketSvc
 
 
