@@ -89,11 +89,9 @@ class O365MailboxManager:
         message = self._get_message(message_id=message_id)
 
         # watchers list
-        emails = list(
-            itertools.chain(
-                (e.address for e in message.cc), (e.address for e in message.bcc)
-            )
-        )
+        ccs = (e.address for e in message.cc)
+        bccs = (e.address for e in message.bcc)
+        emails = list(itertools.chain(ccs, bccs))
 
         current_app.logger.info("\n*** Processing new message ***")
         current_app.logger.info(
@@ -111,7 +109,7 @@ class O365MailboxManager:
         # skip message processing if message is filtered
         if any(
             not e
-            for e in list(map(lambda filter_: filter_.apply(message), self._filters))
+            for e in list(map(lambda f: f.apply(message), self._filters))
         ):
             current_app.logger.info(f"Message '{message.subject}' filtered.")
             return
