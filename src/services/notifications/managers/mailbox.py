@@ -45,12 +45,9 @@ class O365MailboxManager:
             .on_attribute("receivedDateTime")
             .greater_equal(daytime)
         )
-        messages = list(
-            itertools.chain(
-                inbox_folder.get_messages(limit=None, query=query),
-                sent_folder.get_messages(limit=None, query=query),
-            )
-        )
+        inbox_msgs = inbox_folder.get_messages(limit=None, query=query)
+        sent_msgs = sent_folder.get_messages(limit=None, query=query)
+        messages = list(itertools.chain(inbox_msgs, sent_msgs))
 
         # sort messages by age (older first)
         messages.sort(key=lambda e: e.received)
