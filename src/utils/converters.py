@@ -17,4 +17,3 @@ def openapi3_converters():
     # Overwrite functions in Flasgger module
     apispec.schema2jsonschema = openapi_converter.schema2jsonschema
     apispec.schema2parameters = openapi_converter.schema2parameters
-
