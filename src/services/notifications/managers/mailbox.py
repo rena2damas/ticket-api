@@ -8,6 +8,7 @@ import O365.mailbox
 from flask import current_app
 
 from src.models.ticket import Ticket
+from src.services.notifications.filters.OutlookMessageFilter import OutlookMessageFilter
 from src.services.notifications.handlers.JiraNotificationHandler import (
     JiraNotificationHandler,
 )
@@ -22,12 +23,12 @@ class O365MailboxManager:
         self._subscriber = None
         self._filters = None
 
-    def subscriber(self, subscriber_):
-        self._subscriber = subscriber_
+    def subscriber(self, subs):
+        self._subscriber = subs
         return self
 
-    def filters(self, filters_):
-        self._filters = filters_
+    def filters(self, fltr: list[OutlookMessageFilter]):
+        self._filters = fltr
         return self
 
     def check_for_missing_tickets(self, days):
