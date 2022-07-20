@@ -115,10 +115,8 @@ class O365MailboxManager:
         # create new ticket otherwise.
         if existing_ticket:
 
-            # check whether the ticket exists in Jira
+            # delete local reference if ticket no longer exists in Jira
             exists = next(iter(svc.find_by(key=existing_ticket.key, limit=1)), None)
-
-            # delete local reference
             if not exists:
                 svc.delete(ticket_id=existing_ticket.id)
 
