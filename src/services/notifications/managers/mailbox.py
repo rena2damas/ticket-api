@@ -133,15 +133,11 @@ class O365MailboxManager:
                 # append message to history
                 self.add_message_to_history(message, existing_ticket)
 
-                current_app.logger.info(
-                    f"New comment added to Jira ticket '{existing_ticket.key}'."
-                )
+                msg = f"New comment added to Jira ticket '{existing_ticket.key}'."
             else:
-                current_app.logger.info(
-                    "Skip comment to Jira ticket '{}' since it has already been added.".format(
-                        existing_ticket.key
-                    )
-                )
+                key = existing_ticket.key
+                msg = f"Comment on ticket '{key}' has already been added."
+            current_app.logger.info(msg)
         else:
 
             # create ticket in Jira and keep local reference
