@@ -22,34 +22,26 @@ api = Api(blueprint)
 
 @api.resource("/", endpoint="tickets")
 class Tickets(Resource):
-    @flasgger.swag_from(
-        {
-            "parameters": flasgger.marshmallow_apispec.schema2parameters(
-                TicketSearchCriteriaSchema, location="query"
-            ),
-            "tags": ["tickets"],
-            "responses": {
-                200: {
-                    "description": "Ok",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "items": {"$ref": "#/components/schemas/Issue"},
-                            }
-                        },
-                    },
-                },
-                400: {"$ref": "#/components/responses/BadRequest"},
-            },
-        }
-    )
     def get(self):
         """
         Get service tickets based on search criteria
+        ---
+        tags:
+            - tickets
+        parameters:
+            - in: query
+              schema: TicketSearchCriteriaSchema
+        responses:
+            200:
+                description: Ok
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            items: Issue
+            404:
+                $ref: "#/components/responses/NotFound"
         """
-
-        # read params and set defaults
         params = request.args.copy()
         boards = params.poplist("boards") or (b.key for b in JiraSvc().boards())
         filters = {
