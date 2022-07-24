@@ -30,9 +30,9 @@ class TicketSvc:
         svc = JiraSvc()
 
         # translate emails into jira.User objects
-        reporter = cls.user_by_email(kwargs.get("reporter"))
+        reporter = cls.resolve_email(email=kwargs.get("reporter"))
         watchers = [
-            cls.user_by_email(email, default=email)
+            cls.resolve_email(email, default=email)
             for email in kwargs.get("watchers") or []
         ]
 
@@ -219,7 +219,7 @@ class TicketSvc:
         svc = JiraSvc()
 
         # translate watchers into jira.User objects iff exists
-        watchers = [cls.user_by_email(email, default=email) for email in watchers or []]
+        watchers = [cls.resolve_email(email, default=email) for email in watchers or []]
 
         body = cls.create_message_body(
             template="jira.j2",
@@ -263,6 +263,6 @@ class TicketSvc:
         return jinja2.Template(content).render(**values)
 
     @staticmethod
-    def user_by_email(email, default=None) -> jira.resources.User:
+    def resolve_email(email, default=None) -> jira.resources.User:
         """Email translation to Jira user."""
         return next(iter(JiraSvc().search_users(query=email, maxResults=1)), default)
