@@ -160,12 +160,11 @@ class TicketSvc:
                 # prevent cases where local db is not synched with Jira
                 # for cases where Jira tickets are not yet locally present
                 if model:
+                    url = current_app.config["ATLASSIAN_URL"]
                     ticket = issue.raw["fields"]
                     ticket["id"] = issue.id
                     ticket["key"] = issue.key
-                    ticket["url"] = "{}/browse/{}".format(
-                        current_app.config["ATLASSIAN_URL"], issue.key
-                    )
+                    ticket["url"] = f"{url}/browse/{issue.key}"
                     ticket["reporter"] = {"emailAddress": model.reporter}
 
                     # add rendered fields if requested
