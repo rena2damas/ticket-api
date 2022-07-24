@@ -187,11 +187,8 @@ class TicketSvc:
                 setattr(ticket, key, value)
         db.session.commit()
 
-        current_app.logger.info(
-            "Updated ticket '{}' with the following attributes: '{}'.".format(
-                ticket.key, kwargs
-            )
-        )
+        msg = f"Updated ticket '{ticket.key}' with the attributes: '{kwargs}'."
+        current_app.logger.info(msg)
 
     @classmethod
     def delete(cls, ticket_id):
@@ -269,5 +266,4 @@ class TicketSvc:
     @staticmethod
     def user_by_email(email, default=None) -> jira.resources.User:
         """Email translation to Jira user."""
-        svc = JiraSvc()
-        return next(iter(svc.search_users(query=email, maxResults=1)), default)
+        return next(iter(JiraSvc().search_users(query=email, maxResults=1)), default)
