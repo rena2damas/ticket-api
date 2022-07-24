@@ -1,6 +1,6 @@
 import datetime
 
-from src import db
+from src.settings.ctx import db
 
 
 class Ticket(db.Model):
