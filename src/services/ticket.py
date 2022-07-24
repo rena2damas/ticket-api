@@ -54,7 +54,7 @@ class TicketSvc:
         project_key = board.raw["location"]["projectKey"]
         priority = (kwargs.get("priority") or "").lower()
         priority = priority if priority in ["high", "low"] else "None"
-        priority = dict(name=priority.capitalize())
+        priority = {"name": priority.capitalize()}
 
         category = kwargs.pop("category")
         categories = category.split(",") + current_app.config["JIRA_TICKET_LABELS"]
@@ -63,9 +63,9 @@ class TicketSvc:
         issue = svc.create_issue(
             summary=kwargs.get("title"),
             description=body,
-            reporter=dict(id=reporter_id),
-            project=dict(key=project_key),
-            issuetype=dict(name=current_app.config["JIRA_TICKET_TYPE"]),
+            reporter={"id": reporter_id},
+            project={"key": project_key},
+            issuetype={"name": current_app.config["JIRA_TICKET_TYPE"]},
             labels=categories,
             priority=priority,
         )
