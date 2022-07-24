@@ -25,7 +25,7 @@ class TokenSvc:
     @staticmethod
     def find_by(
         one=False, **filters
-    ) -> Union[List[OAuth2Token], Optional[OAuth2Token]]:
+    ) -> Union[list[OAuth2Token], Optional[OAuth2Token]]:
         query = OAuth2Token.query.filter_by(**filters)
         return query.all() if not one else query.one_or_none()
 
