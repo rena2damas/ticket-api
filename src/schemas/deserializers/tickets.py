@@ -68,6 +68,15 @@ class CreateTicketCommentSchema(Schema):
     )
 
 
+class CreateTicketCommentAttachmentsSchema(CreateTicketCommentSchema):
+    attachments = fields.List(
+        fields.Raw(metadata={"type": "file"}),
+        allow_none=False,
+        load_default=[],
+        metadata={"description": "files to attach"},
+    )
+
+
 class TicketSearchCriteriaSchema(Schema):
     boards = fields.List(
         fields.String(validate=validate.OneOf(JiraSvc.supported_board_keys())),

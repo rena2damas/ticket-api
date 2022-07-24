@@ -64,7 +64,7 @@ class Tickets(Resource):
         tags:
             - tickets
         requestBody:
-            description: action properties
+            description: ticket properties
             required: true
             content:
                 application/json:
@@ -212,6 +212,31 @@ class Comment(Resource):
     def post(self, key):
         """
         Create a new ticket comment
+        ---
+        tags:
+            - tickets
+        requestBody:
+            description: comment properties
+            required: true
+            content:
+                application/json:
+                    schema: CreateTicketCommentSchema
+                multipart/form-data:
+                    schema: CreateTicketCommentSchemaAttachments
+                    encoding:
+                        watchers:
+                            style: form
+                            explode: true
+                        attachments:
+                            style: form
+                            explode: true
+        responses:
+            204:
+                description: The resource was created successfully.
+            400:
+                $ref: "#/components/responses/BadRequest"
+            415:
+                $ref: "#/components/responses/UnsupportedMediaType"
         """
         body = {}
         files = []
