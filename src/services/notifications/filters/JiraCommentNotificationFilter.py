@@ -54,12 +54,12 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
                 )
 
                 # embed base64 images in message body
+                scheme = "data:image/jpeg;base64"
                 encode = utils.encode_content
                 content = functools.partial(svc.content, base="{server}{path}")
                 body = re.sub(
                     pattern=r'src="(.*?)"',
-                    repl=lambda m: f"src='data:image/jpeg;base64,"
-                    f"{encode(content(path=m.group(1)))}'",
+                    repl=lambda m: f"src='{scheme},{encode(content(path=m.group(1)))}'",
                     string=comment.renderedBody,
                 )
 
