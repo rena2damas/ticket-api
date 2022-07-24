@@ -1,5 +1,4 @@
 import jira
-import marshmallow
 from flask import Blueprint, request
 from flask_restful import Api, Resource
 
@@ -157,64 +156,19 @@ class Ticket(Resource):
 
 @api.resource("/<key>/comment", endpoint="comment")
 class Comment(Resource):
-    @flasgger.swag_from(
-        {
-            "parameters": flasgger.marshmallow_apispec.schema2parameters(
-                marshmallow.Schema.from_dict(
-                    {
-                        "key": marshmallow.fields.String(
-                            required=True,
-                            metadata=dict(description="ticket unique identifier"),
-                        )
-                    }
-                ),
-                location="path",
-            ),
-            "tags": ["tickets"],
-            "requestBody": {
-                "required": True,
-                "content": {
-                    "application/json": {
-                        "schema": flasgger.marshmallow_apispec.schema2jsonschema(
-                            CreateTicketCommentSchema
-                        )
-                    },
-                    "multipart/form-data": {
-                        "schema": flasgger.marshmallow_apispec.schema2jsonschema(
-                            marshmallow.Schema.from_dict(
-                                {
-                                    **CreateTicketCommentSchema().fields,
-                                    "attachments": marshmallow.fields.List(
-                                        marshmallow.fields.Raw(
-                                            metadata={
-                                                "type": "file",
-                                                "description": "files to attach",
-                                            }
-                                        )
-                                    ),
-                                }
-                            )
-                        ),
-                        "encoding": {
-                            "watchers": {"style": "form", "explode": True},
-                            "attachments": {"style": "form", "explode": True},
-                        },
-                    },
-                },
-            },
-            "responses": {
-                204: {"description": "No Content"},
-                400: {"$ref": "#/components/responses/BadRequest"},
-                415: {"$ref": "#/components/responses/UnsupportedMediaType"},
-            },
-        }
-    )
     def post(self, key):
         """
         Create a new ticket comment
         ---
         tags:
             - tickets
+        parameters:
+            - in: path
+              name: path
+              schema:
+                type: string
+              required: true
+              description: the ticket unique identifier
         requestBody:
             description: comment properties
             required: true
