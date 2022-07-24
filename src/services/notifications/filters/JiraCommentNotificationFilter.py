@@ -1,4 +1,5 @@
 import re
+import functools
 
 import requests
 import O365.mailbox
@@ -53,13 +54,12 @@ class JiraCommentNotificationFilter(OutlookMessageFilter):
                 )
 
                 # embed base64 images in message body
+                encode = utils.encode_content
+                content = functools.partial(svc.content, base="{server}{path}")
                 body = re.sub(
                     pattern=r'src="(.*?)"',
-                    repl=lambda m: r'src="data:image/jpeg;base64,{}"'.format(
-                        utils.encode_content(
-                            svc.content(path=m.group(1), base="{server}{path}")
-                        )
-                    ),
+                    repl=lambda m: f"src='data:image/jpeg;base64,"
+                    f"{encode(content(path=m.group(1)))}'",
                     string=comment.renderedBody,
                 )
 
