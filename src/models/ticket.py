@@ -17,4 +17,4 @@ class Ticket(db.Model):
     reporter = db.Column(db.String, nullable=False)
 
     def __str__(self):
-        return self.key
+        return f"<Ticket '{self.key}'>"
