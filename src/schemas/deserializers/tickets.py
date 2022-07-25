@@ -19,8 +19,7 @@ class CreateTicketSchema(Schema):
         required=True, metadata={"description": "ticket reporter email", "example": ""}
     )
     board = fields.String(
-        required=True,
-        metadata={"description": "boards to fetch tickets from"}
+        required=True, metadata={"description": "boards to fetch tickets from"}
     )
     category = fields.String(
         required=True,
