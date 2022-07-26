@@ -8,7 +8,7 @@ from src import __meta__, __version__, utils
 from src.api.tickets import api as tickets
 from src.cli.o365.cli import cli as o365_cli
 from src.settings import oas
-from src.settings.ctx import db, register_events
+from src.settings.ctx import ctx_settings, db
 from src.settings.env import config_class, load_dotenv
 
 
@@ -80,8 +80,8 @@ def setup_app(app):
     # create views for Swagger
     Swagger(app=app, apispec=spec, config=oas.swagger_configs(app_root=url_prefix))
 
-    # register handlers and events
-    register_events(app)
+    # settings within app ctx
+    ctx_settings(app)
 
     # register cli commands
     app.cli.add_command(o365_cli)
