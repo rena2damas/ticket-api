@@ -31,11 +31,11 @@ def create_app(config_name="development", dotenv=True, configs=None):
 
 def setup_app(app):
     """Initial setups."""
-    # link db to app
-    db.init_app(app)
-
     url_prefix = app.config["APPLICATION_ROOT"]
     openapi_version = app.config["OPENAPI"]
+
+    # link db to app
+    db.init_app(app)
 
     # initial blueprint wiring
     index = Blueprint("index", __name__)
